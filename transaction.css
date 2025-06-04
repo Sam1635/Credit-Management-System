@@ -1,0 +1,418 @@
+/* Body and Sidebar */
+.body {
+    display: flex;
+}
+
+.sidebar {
+    display: flex;
+    width: 5%;
+    margin-top: -8px;
+    margin-left: -8px;
+    height: 100%;
+    flex-direction: column;
+    position: fixed;
+}
+
+.home-png-button,
+.setting-png-button {
+    width: 150px;
+    height: 50px;
+    color: white;
+    background-color: #17174F;
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-left: -103px;
+    margin-bottom: 5px;
+    padding-left: 20px;
+    transition: 0.3s;
+    font-size: 13px;
+    text-align: start;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    border-radius: 25px;
+}
+
+.home-png-button {
+    background-image: url('home.png');
+    padding-left: 30px;
+    background-size: 34%;
+    margin-left: -98.6px;
+}
+
+.setting-png-button {
+    background-image: url('settings.jpg');
+    padding-left: 20px;
+}
+
+.home-png-button:hover,
+.setting-png-button:hover {
+    margin-left: 0px;
+    transition: 0.3s;
+}
+
+/* ========== Customer Div Container ========== */
+.customer-div {
+    display: flex;
+    flex-direction: column;
+    background-color: #e9e3e3;
+    margin: 20px auto;
+    height: 600px;
+    width: 80%;
+    border: 2px solid #17174F;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* ========== Header Section ========== */
+.header {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color:  #e9e3e3;
+    height: 60px;
+    z-index: 3;
+    border-bottom: 2px solid #17174F;
+}
+.top_bal{
+    width: 100%;
+}
+.top_bal h2{
+    text-align: end;
+    margin-right: 100px;
+    color: red;
+}
+.profile-png {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #17174F;
+    margin-right: 15px;
+}
+
+.header p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #17174F;
+}
+
+/* ========== Entry Labels (Date, Given, Received) ========== */
+.entry {
+    display: grid;
+    margin: 0;
+    grid-template-columns: 2fr 1.5fr 1.5fr;
+    align-items: center;
+    padding: 10px 20px;
+    background-color:  #e9e3e3;
+    font-weight: bold;
+    border-bottom: 2px solid #17174F;
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+}
+.title{
+    margin-left: 20px;
+}
+.title_r{
+    margin-left: 100px;
+}
+.title_g{
+    margin-left: -20px;
+}
+/* ========== Transaction List Container ========== */
+.data {
+    flex: 1;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0px 20px 10px 20px;
+}
+.data > div:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* ========== Individual Transaction Rows ========== */
+.collected_entry,
+.given_entry {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #999;
+    font-size: 14px;
+    color: #333;
+}
+
+.date {
+    font-weight: bold;
+    color: #17174F;
+}
+
+.yougot-amount {
+    color: #1de11d;
+    font-weight: bold;
+    text-align: center;
+}
+
+.yougave-amount {
+    color: #fb0206;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* ========== Button Container at Bottom ========== */
+/* ========== Bottom Buttons Container ========== */
+.bottom {
+    display: flex;
+    justify-content: center;  /* This ensures the buttons are centered horizontally */
+    gap: 30px;  /* Increased gap between buttons */
+    padding: 12px 0;
+    position: fixed;  /* Make the bottom container fixed */
+    bottom: 0;
+    left: 0;
+    right: 0;  /* Ensure it spans across the full width */
+    z-index: 3;
+    align-items: center;  /* Vertically center the buttons */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 12px 0;
+    margin-left: 50%;
+    border-top: 2px solid #17174F;
+    background-color: #D9D9D9;
+    position: sticky;
+    bottom: 0;
+    z-index: 3;
+}
+
+/* ========== Buttons ========== */
+.you-gave-button,
+.you-got-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.you-gave-button {
+    background-color: #e53935;
+}
+
+.you-gave-button:hover {
+    background-color: #d32f2f;
+}
+
+.you-got-button {
+    background-color: #4CAF50;
+}
+
+.you-got-button:hover {
+    background-color: #388E3C;
+}
+
+/* Optional Scrollbar Styling (for better aesthetics) */
+.data::-webkit-scrollbar {
+    width: 8px;
+}
+
+.data::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+/* Modal Styles */
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 9999; /* Ensure it's on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px 30px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    border: 1px solid #888;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Background blur effect */
+.body.modal-open .customer-div {
+    filter: blur(5px); /* Apply blur effect */
+}
+
+.body.modal-open {
+    overflow: hidden; /* Prevent scrolling when modal is open */
+}
+
+/* Rest of the styling */
+.customer-div {
+    transition: filter 0.3s ease;
+}
+
+
+/* Center the modal content text */
+.modal-content h2,
+.modal-content .form-group label {
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    text-align: left;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background-color: #45a049;
+}
+
+/* Bottom Buttons for Debited and Credited with smaller size */
+.you-gave-button,
+.you-got-button {
+    padding: 8px 16px;
+    font-size: 14px;
+    width: 120px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.you-gave-button:hover,
+.you-got-button:hover {
+    background-color: #45a049;
+}
+
+.you-gave-button {
+    background-color: #e53935;
+}
+
+.you-got-button {
+    background-color: #4CAF50;
+}
+
+.date-box {
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .date-box label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .date-box input[type="date"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .date-box input[type="date"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
+  }
+  .bill-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+  }
+  .bill-left {
+    flex: 1;
+    text-align: left;
+    font-weight: bold;
+  }
+  .bill-center {
+    flex: 1;
+    text-align: center;
+  }
+  .bill-right {
+    flex: 1;
+    text-align: right;
+  }
+  .balance {
+    font-size: 12px;
+    margin-top: 3px;
+    color: grey;
+    text-align: left;
+  }
+  .date {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  .entry {
+    display: flex;
+    font-weight: bolder;
+    margin: 17px 0;
+  }
+  .title, .title_g, .title_r {
+    flex: 1;
+    text-align: center;
+  }

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Credit Management System</title>
+    <link rel="stylesheet" href="report.css" />
+    <link rel="icon" href="images/srmlogo.png" type="image/png" />
+</head>
+<body>
+
+<div class="login-division">
+    <h1 style="color: #17174F;">REPORT GENERATION</h1>
+    <form id="reportForm">
+        <div class="contents">
+            <div class="components"><label class="text">Start Date</label></div>
+            <div class="value"><input class="search-box" type="date" name="start_date" required /></div>
+        </div>
+
+        <div class="contents">
+            <div class="components"><label class="text">End Date</label></div>
+            <div class="value"><input class="search-box" type="date" name="end_date" required /></div>
+        </div>
+
+        <div class="contents">
+            <div class="components"><label class="text" for="group">Group</label></div>
+            <div class="value">
+                <select id="group" class="drop-box" name="groupid" required>
+                    <option value="" disabled selected>Select Group</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="contents-button" style="text-align: center;">
+            <button class="update-button" type="submit">
+                <span class="text-button">Generate Report</span>
+            </button>
+        </div>
+    </form>
+
+    <div id="reportResult" style="margin-top: 20px;"></div>
+</div>
+
+<!-- html2pdf.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+    // Populate group dropdown
+    fetch('report.php?fetchGroups=1')
+        .then(res => res.json())
+        .then(data => {
+            const dropdown = document.getElementById('group');
+            data.forEach(group => {
+                const option = document.createElement('option');
+                option.value = group.groupid;
+                option.textContent = group.groupname;
+                dropdown.appendChild(option);
+            });
+        });
+
+    // Handle form submit via AJAX
+    document.getElementById('reportForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        fetch('report.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            const reportDiv = document.getElementById('reportResult');
+            if (data.error) {
+                reportDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
+                return;
+            }
+
+            reportDiv.innerHTML = `
+                <div class="report-section">
+                    <div class="contents">
+                        <div class="components"><label class="text">Amount Given</label></div>
+                        <div class="text-value">${data.given}</div>
+                    </div>
+                    <div class="contents">
+                        <div class="components"><label class="text">Amount Received</label></div>
+                        <div class="text-value">${data.received}</div>
+                    </div>
+                    <div class="contents">
+                        <div class="components"><label class="text">Balance</label></div>
+                        <div class="text-value">${data.balance}</div>
+                    </div>
+                    <div class="contents-button" style="margin-top: 20px; text-align: center;">
+                        <button class="update-button" type="button" onclick="downloadPDF()">
+                            <span class="text-button">Print PDF</span>
+                        </button>
+                        <a href="home.html" style="margin-left: 10px;">
+                            <button class="update-button" type="button">
+                                <span class="text-button">Home</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            `;
+        });
+    });
+
+    // Function to download login-division as PDF
+    // Function to download login-division as PDF
+// Function to download login-division as PDF
+function downloadPDF() {
+    var element = document.querySelector('.login-division');
+
+    // Adjust html2pdf settings to center content and ensure it fits on one page
+    var opt = {
+        margin:       [0.5, 0.5],  // Margin of 0.5 inches
+        filename:     'report.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF: {
+            unit: 'in', 
+            format: 'letter', 
+            orientation: 'portrait',
+            // Center the content on the page
+            pageSize: 'letter',
+            compress: true
+        }
+    };
+
+    html2pdf().from(element).set(opt).save();
+}
+
+
+</script>
+
+</body>
+</html>

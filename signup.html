@@ -1,0 +1,157 @@
+<html>
+<head>
+    <title>SIGN UP</title>
+    <link rel="icon" href="images/srmlogo.png" type="images/png">
+    <link rel="stylesheet" href="signup.css">
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-image">
+        <img src="background.jpg">
+    </div>
+
+    <div class="header">
+        <a class="anchor" href="index.html">HOME</a>
+        <a class="anchor" href="about.html">ABOUT</a>
+        <a class="anchor" href="service.html">SERVICES</a>
+        <a class="anchor" href="contact.html">CONTACT</a>
+    </div>
+
+    <div class="login-division-div">
+        <div class="login-division">
+            <div class="login">
+                <h2 class="welcome-back">Welcome Back !</h2>
+                <div class="login-text-div">
+                    <h2 class="login-text">Already Registered</h2>
+                    <h2 class="login-text">Back to your Account......</h2>
+                </div>
+                <div>
+                    <button class="signin-button">
+                        <a href="signin.html" class="sign-in-text">SIGN IN</a>
+                    </button>
+                </div>
+            </div>
+
+            <div class="signup">
+                <h2>New to our Page?</h2>
+                <h3>Create an Account</h3>
+
+                <form method="POST" id="otpForm">
+                    <input class="search-box name" type="text" name="name" placeholder="Business Name" required>
+                    <input class="search-box email" type="text" name="email" placeholder="Email" required>
+                    <div>
+                        <button class="sendotp" type="submit">SEND OTP</button>
+                    </div>
+                </form>
+
+                <form method="POST" id="verifyForm">
+                    <input class="search-box otp" type="number" name="otp_input" placeholder="Enter OTP" required>
+                    <div class="resend-otp-div">
+                        <a href="#" class="resend-otp" id="resendOtpLink">Resend OTP?</a>
+                    </div>
+                    <br>
+                    <center>
+                        <button class="signup-button" type="submit">SIGN UP</button>
+                    </center>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+const regName = /^[A-Z]{1}[A-Za-z0-9]{2,30}$/;
+const regEmail = /^[A-Za-z0-9.]+@gmail\.com$/;
+
+const nameInput = document.querySelector(".name");
+const emailInput = document.querySelector(".email");
+
+function validate(elem, regEx, msg) {
+    if (!regEx.test(elem.value)) {
+        elem.setCustomValidity(msg);
+        elem.reportValidity();
+    } else {
+        elem.setCustomValidity("");
+    }
+}
+
+nameInput.addEventListener('input', () => {
+    validate(nameInput, regName, "Start with uppercase. 3-30 chars allowed.");
+});
+emailInput.addEventListener('input', () => {
+    validate(emailInput, regEmail, "Only valid Gmail addresses allowed.");
+});
+
+document.getElementById('otpForm').addEventListener('submit', function(e) {
+    e.preventDefault(); 
+
+    sendOtp(); // Call common function
+});
+
+document.getElementById('resendOtpLink').addEventListener('click', function(e) {
+    e.preventDefault(); 
+
+    sendOtp(); // Call same function
+});
+
+function sendOtp() {
+    const email = emailInput.value.trim();
+    const name = nameInput.value.trim();
+
+    if (email === '' || name === '') {
+        alert("⚠️ Please enter Business Name and Email first.");
+        return;
+    }
+
+    fetch('send_otp.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data.trim() === "email_exists") {
+            alert("⚠️ Email already used. Please try another email.");
+        } else if (data.trim() === "otp_sent") {
+            alert("📨 OTP sent to your email.");
+        } else {
+            alert("❌ Failed to send OTP. Please try again.");
+        }
+    })
+    .catch(error => {
+        alert("❌ Failed to send OTP.");
+        console.error(error);
+    });
+}
+
+document.getElementById('verifyForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const otp = document.querySelector('input[name="otp_input"]').value.trim();
+
+    if (otp === '') {
+        alert("⚠️ Please enter OTP.");
+        return;
+    }
+
+    fetch('verify_otp.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `otp=${encodeURIComponent(otp)}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById('verifyForm').insertAdjacentHTML('beforeend', `<div>${data}</div>`);
+    })
+    .catch(error => {
+        alert("❌ OTP Verification failed.");
+        console.error(error);
+    });
+});
+</script>
+
+</html>

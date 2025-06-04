@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <title>
+            Credit Management System
+        </title>
+        <link rel="stylesheet" href="home.css">
+        <link rel="icon" href="images/srmlogo.png" type="images/png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+
+    <body>
+        <div class="background-image">
+            <img src="background.jpg">
+        </div>
+
+        <div class="body">
+            <div class="sidebar">
+                <button class="home-png-button">
+                    <a href="home.html" class="home">HOME</a>
+                </button>
+
+                <button class="setting-png-button">
+                    <a href="settings.php" class="home">SETTINGS</a>
+                </button>
+            </div>
+
+            <div class="welcome">
+                <h1 class="cn">
+                    Welcome 
+                </h1>
+            </div>
+        </div>
+
+        <div class="history">
+            <div class="you-gave">
+                <p class="amount">
+                    &#8377; 0
+                </p>
+                <p class="description">
+                    Debited
+                </p>
+            </div>
+            <div class="you-got">
+                <p class="amount">
+                    &#8377; 0
+                </p>
+                <p class="description">
+                    Credited
+                </p>
+            </div>
+            <div class="balance">
+                <p class="amount">
+                    &#8377; 0
+                </p>
+                <p class="description">
+                    Balance
+                </p>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="transaction-button">
+                <i class="fa fa-bars"></i>
+                <a href="report.html" CLASS="TRAN">Transactions</a>
+            </button>
+            <button class="transaction-button">
+                <i class="fa fa-users"></i>
+                <a href="grouping.html" CLASS="TRAN">Your Customers</a>
+            </button>
+        </div>
+    </body>
+
+    <script>
+        fetch('home_data.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    window.location.href = "signin.html";
+                    return;
+                }
+
+                document.querySelector('.cn').innerHTML = `Welcome ${data.businessname} !!!`;
+                document.querySelector('.you-gave .amount').innerHTML = `₹ ${data.total_debited}`;
+                document.querySelector('.you-got .amount').innerHTML = `₹ ${data.total_credited}`;
+                document.querySelector('.balance .amount').innerHTML = `₹ ${data.total_balance}`;
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+            });
+    </script>
+</html>

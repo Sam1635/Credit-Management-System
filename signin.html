@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <title>
+            SIGN IN
+        </title>
+        <link rel="icon" href="images/srmlogo.png" type="images/png">
+        <link rel="stylesheet" href="signin_1.css">
+        <link rel="icon" type="image/x-icon" href="logo.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+
+    </head>
+    <body>
+        <div class="background-image">
+            <img src="background.jpg" >
+        </div>
+        <div class="header">
+            <a class="anchor" href="index.html">HOME</a>
+            <a class="anchor" href="about.html">ABOUT</a>
+            <a class="anchor" href="service.html">SERVICES</a>
+            <a class="anchor" href="contact.html">CONTACT</a>
+        </div>
+        <div class="login-division-div">
+            <div class="login-division">
+                <div class="login">
+                    <h2 class="Sign-in">
+                        Sign In
+                    </h2>
+                        <form id="signin" onsubmit="return validateForm()" method="POST" action="login.php">
+                            <center>
+                                <input class="search-box username" type="text" name="username" placeholder="User Name" required>
+                                <br>
+
+                                <input class="search-box pass" type="password" name="password" placeholder="Password" required>
+                            <br>
+                            </center>
+                        
+                            <div class="resend-otp-div">
+                                <a href="forget_password.html" class="resend-otp">
+                                    Forget Password?
+                                </a>
+                            </div>
+                            
+                            <br>
+                                <div class="sign-in-button-div">
+                                    <button class="signup-button" id="signinBtn" type="submit" disabled>SIGN IN</button>
+
+                                </div>
+                                
+                        </form> 
+                </div>
+                <div class="signup">
+                    <h2 class="login-text-div">
+                        Hello!
+                    </h2>
+                    <div class="login-text-div">
+                        <h2 class="login-text">
+                            Register with your details to
+                        </h2>
+                        <h2 class="login-text">
+                            maintain your credit!
+                        </h2>
+                    </div>
+                    <div class="sign-in-button-div">
+                        <button class="signin-button" type="submit">
+                            <a href="signup.html" class="signin-button">SIGN UP</a>
+                        </button>
+                    </div>
+                </div>
+    <script>
+        const regName= /^[A-Za-z0-9_]{2,20}$/;
+        const regPass= /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%_-])[A-Za-z0-9!@#$%_-]{8,16}$/;
+
+        const username=document.querySelector(".username");
+        const pass= document.querySelector(".pass");
+        function validate(elem,regEx,msg){
+            if(!regEx.test(elem.value)) {
+                elem.setCustomValidity(""+msg);
+                elem.reportValidity();
+        }
+        else {
+            elem.setCustomValidity("");
+           
+        }
+        }
+        username.addEventListener('input', () => {
+            validate(username, regName,"Should not contain special characters");
+        });
+        pass.addEventListener('input', () => {
+            validate(pass, regPass,"*Should be atleast 8 characters. \n *Should contain atleast one Uppercse,Lowercase,Digit,Special character.");
+        });
+        const btn = document.getElementById("signinBtn");
+
+    function checkFormValidity() {
+        const isUsernameValid = regName.test(username.value);
+        const isPassValid = regPass.test(pass.value);
+        btn.disabled = !(isUsernameValid && isPassValid);
+    }
+
+    username.addEventListener('input', checkFormValidity);
+    pass.addEventListener('input', checkFormValidity);
+    </script>
+
+    </body>
+</html>

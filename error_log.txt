@@ -1,0 +1,63 @@
+[16-Apr-2025 10:12:25 UTC] PHP Warning:  Undefined array key "name" in D:\CMS PROJECT\customers.php on line 37
+[16-Apr-2025 10:12:25 UTC] PHP Warning:  Undefined array key "phone" in D:\CMS PROJECT\customers.php on line 38
+[16-Apr-2025 10:12:25 UTC] PHP Warning:  Undefined array key "balance" in D:\CMS PROJECT\customers.php on line 39
+[16-Apr-2025 10:12:25 UTC] PHP Warning:  Undefined array key "billno" in D:\CMS PROJECT\customers.php on line 40
+[16-Apr-2025 10:12:25 UTC] PHP Warning:  Undefined array key "groupid" in D:\CMS PROJECT\customers.php on line 41
+[16-Apr-2025 10:12:25 UTC] PHP Warning:  Undefined array key "userid" in D:\CMS PROJECT\customers.php on line 42
+[16-Apr-2025 10:12:39 UTC] PHP Warning:  Undefined array key "name" in D:\CMS PROJECT\customers.php on line 37
+[16-Apr-2025 10:12:39 UTC] PHP Warning:  Undefined array key "phone" in D:\CMS PROJECT\customers.php on line 38
+[16-Apr-2025 10:12:39 UTC] PHP Warning:  Undefined array key "balance" in D:\CMS PROJECT\customers.php on line 39
+[16-Apr-2025 10:12:39 UTC] PHP Warning:  Undefined array key "billno" in D:\CMS PROJECT\customers.php on line 40
+[16-Apr-2025 10:12:39 UTC] PHP Warning:  Undefined array key "groupid" in D:\CMS PROJECT\customers.php on line 41
+[16-Apr-2025 10:12:39 UTC] PHP Warning:  Undefined array key "userid" in D:\CMS PROJECT\customers.php on line 42
+[16-Apr-2025 10:19:52 UTC] PHP Warning:  Undefined array key "name" in D:\CMS PROJECT\customers.php on line 37
+[16-Apr-2025 10:19:52 UTC] PHP Warning:  Undefined array key "phone" in D:\CMS PROJECT\customers.php on line 38
+[16-Apr-2025 10:19:52 UTC] PHP Warning:  Undefined array key "balance" in D:\CMS PROJECT\customers.php on line 39
+[16-Apr-2025 10:19:52 UTC] PHP Warning:  Undefined array key "billno" in D:\CMS PROJECT\customers.php on line 40
+[16-Apr-2025 10:19:52 UTC] PHP Warning:  Undefined array key "groupid" in D:\CMS PROJECT\customers.php on line 41
+[16-Apr-2025 10:19:52 UTC] PHP Warning:  Undefined array key "userid" in D:\CMS PROJECT\customers.php on line 42
+[16-Apr-2025 10:20:33 UTC] PHP Warning:  Undefined array key "name" in D:\CMS PROJECT\customers.php on line 37
+[16-Apr-2025 10:20:33 UTC] PHP Warning:  Undefined array key "phone" in D:\CMS PROJECT\customers.php on line 38
+[16-Apr-2025 10:20:33 UTC] PHP Warning:  Undefined array key "balance" in D:\CMS PROJECT\customers.php on line 39
+[16-Apr-2025 10:20:33 UTC] PHP Warning:  Undefined array key "billno" in D:\CMS PROJECT\customers.php on line 40
+[16-Apr-2025 10:20:33 UTC] PHP Warning:  Undefined array key "groupid" in D:\CMS PROJECT\customers.php on line 41
+[16-Apr-2025 10:20:33 UTC] PHP Warning:  Undefined array key "userid" in D:\CMS PROJECT\customers.php on line 42
+[16-Apr-2025 10:21:57 UTC] PHP Warning:  Undefined array key "name" in D:\CMS PROJECT\customers.php on line 37
+[16-Apr-2025 10:21:57 UTC] PHP Warning:  Undefined array key "phone" in D:\CMS PROJECT\customers.php on line 38
+[16-Apr-2025 10:21:57 UTC] PHP Warning:  Undefined array key "balance" in D:\CMS PROJECT\customers.php on line 39
+[16-Apr-2025 10:21:57 UTC] PHP Warning:  Undefined array key "billno" in D:\CMS PROJECT\customers.php on line 40
+[16-Apr-2025 10:21:57 UTC] PHP Warning:  Undefined array key "groupid" in D:\CMS PROJECT\customers.php on line 41
+[16-Apr-2025 10:21:57 UTC] PHP Warning:  Undefined array key "userid" in D:\CMS PROJECT\customers.php on line 42
+[16-Apr-2025 10:22:45 UTC] PHP Warning:  Undefined array key "name" in D:\CMS PROJECT\customers.php on line 37
+[16-Apr-2025 10:22:45 UTC] PHP Warning:  Undefined array key "phone" in D:\CMS PROJECT\customers.php on line 38
+[16-Apr-2025 10:22:45 UTC] PHP Warning:  Undefined array key "balance" in D:\CMS PROJECT\customers.php on line 39
+[16-Apr-2025 10:22:45 UTC] PHP Warning:  Undefined array key "billno" in D:\CMS PROJECT\customers.php on line 40
+[16-Apr-2025 10:22:45 UTC] PHP Warning:  Undefined array key "groupid" in D:\CMS PROJECT\customers.php on line 41
+[16-Apr-2025 10:22:45 UTC] PHP Warning:  Undefined array key "userid" in D:\CMS PROJECT\customers.php on line 42
+[16-Apr-2025 10:22:51 UTC] PHP Warning:  Undefined array key "name" in D:\CMS PROJECT\customers.php on line 37
+[16-Apr-2025 10:22:51 UTC] PHP Warning:  Undefined array key "phone" in D:\CMS PROJECT\customers.php on line 38
+[16-Apr-2025 10:22:51 UTC] PHP Warning:  Undefined array key "balance" in D:\CMS PROJECT\customers.php on line 39
+[16-Apr-2025 10:22:51 UTC] PHP Warning:  Undefined array key "billno" in D:\CMS PROJECT\customers.php on line 40
+[16-Apr-2025 10:22:51 UTC] PHP Warning:  Undefined array key "groupid" in D:\CMS PROJECT\customers.php on line 41
+[16-Apr-2025 10:22:51 UTC] PHP Warning:  Undefined array key "userid" in D:\CMS PROJECT\customers.php on line 42
+[16-Apr-2025 10:23:36 UTC] PHP Warning:  Undefined array key "name" in D:\CMS PROJECT\customers.php on line 37
+[16-Apr-2025 10:23:36 UTC] PHP Warning:  Undefined array key "phone" in D:\CMS PROJECT\customers.php on line 38
+[16-Apr-2025 10:23:36 UTC] PHP Warning:  Undefined array key "balance" in D:\CMS PROJECT\customers.php on line 39
+[16-Apr-2025 10:23:36 UTC] PHP Warning:  Undefined array key "billno" in D:\CMS PROJECT\customers.php on line 40
+[16-Apr-2025 10:23:36 UTC] PHP Warning:  Undefined array key "groupid" in D:\CMS PROJECT\customers.php on line 41
+[16-Apr-2025 10:23:36 UTC] PHP Warning:  Undefined array key "userid" in D:\CMS PROJECT\customers.php on line 42
+[16-Apr-2025 10:32:40 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in D:\CMS PROJECT\customers.php:63
+Stack trace:
+#0 D:\CMS PROJECT\customers.php(63): mysqli_stmt->bind_param('isiiiii', 16, 'A0003', '2000', '2000', 1, '1')
+#1 {main}
+  thrown in D:\CMS PROJECT\customers.php on line 63
+[16-Apr-2025 10:43:15 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in D:\CMS PROJECT\customers.php:66
+Stack trace:
+#0 D:\CMS PROJECT\customers.php(66): mysqli_stmt->bind_param('isiiiii', 17, 'A0003', '2000', '2000', 1, '1')
+#1 {main}
+  thrown in D:\CMS PROJECT\customers.php on line 66
+[16-Apr-2025 10:43:16 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in D:\CMS PROJECT\customers.php:66
+Stack trace:
+#0 D:\CMS PROJECT\customers.php(66): mysqli_stmt->bind_param('isiiiii', 18, 'A0003', '2000', '2000', 1, '1')
+#1 {main}
+  thrown in D:\CMS PROJECT\customers.php on line 66

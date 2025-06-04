@@ -1,0 +1,258 @@
+.background-image{
+    position:fixed;
+    top:0;
+    bottom:0;
+    right: 0;
+    left: 0;
+    opacity: 0.2;
+    z-index: -1;
+}
+.background-image img{
+    width:100%;
+    height:100%;
+}
+.body{
+    display:flex;
+    
+}
+.sidebar{
+    display:flex;
+    width:5%;
+    margin-top:-8;
+    margin-left:-8;
+    height: 100%;
+    flex-direction: column;
+    position:fixed;
+}
+.home-png-button,
+.profile-png-button,
+.setting-png-button,
+.customers-png-button{
+    width:150px;
+    height:50px;
+    color:white;
+    background-color: #17174F;
+    background-size:contain; 
+    background-position: right; 
+    background-repeat: no-repeat; 
+    border: none;
+    cursor: pointer;
+    margin-top:15px;
+    margin-left:-103px;
+    margin-bottom:5px;
+    padding-left: 20px;
+    transition: 0.3s;
+    font-size: 13px;
+    text-align:start;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    border-radius: 25px;
+}
+
+.home-png-button{
+    background-image: url('home.png'); 
+    padding-left: 30px;
+    background-size:34%; 
+    margin-left:-107.6px;
+    
+}
+
+.setting-png-button{
+    background-image: url('settings.jpg'); 
+    padding-left: 20px;
+    margin-left:-107.6px;
+}
+
+.home-png-button:hover,
+.setting-png-button:hover{
+    margin-left:0px;
+    transition: 0.3s;
+}
+.customer-div{
+    display:flex;
+    flex-direction: column;
+    background-color: #d9d9d9;
+    margin-top:20px;
+    margin-left:200px;
+    margin-right: 200px;
+    height:500px;
+    width:100%;
+    overflow-y: scroll;
+    padding: 0px 40px;
+    border:2px solid #17174F;
+}
+.customer-div div {
+    /* background-color: #17174F; */
+    color: white;
+    height:fit-content;
+}
+.add-new-group{
+    background-color: #17174F;
+    color:white;
+    width:350px;
+    height:50px;
+    border-radius: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    border: none;
+    position:fixed;
+    right: 0;
+    bottom: 50;
+    right:20;
+    cursor: pointer;
+    transition: 0.3s;
+
+}
+.add-new-group:hover{
+    width:355px;
+    height:55px;   
+    font-size: 22px;
+}
+.name-div{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    width:100%;
+    color:#17174F;
+    justify-content:space-around;
+    text-align: center;
+    border-bottom: 2px solid #17174F;
+
+    
+}
+.name-div1{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    width:100%;
+    color:#17174F;
+    justify-content:space-around;
+    text-align: center;
+    align-items: center;
+    border-bottom: 1px solid #17174F;
+
+    
+}
+.name,
+.amount{
+    font-size:x-large;
+    margin: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color:#17174F;
+}
+.amount1{
+    font-size:x-large;
+    color:#FB0206;
+}
+/* .horizontal-border{
+    width: 90%;
+    color:#17174F;
+    height:2px;
+    background-color:#17174F;
+} */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 50%;
+    max-width: 600px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.modal-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-box label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.modal-box input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.modal-box p {
+    font-size: 12px;
+    color: red;
+    margin: 5px 0 10px 0;
+    display: none;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* .modal-buttons button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.modal-buttons button:hover {
+    background-color: #0056b3;
+} */
+
+/* Add Customers Button Bottom Right */
+.add-new-group {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #17174F;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.add-new-group i {
+    margin-right: 8px;
+}
+
+.add-new-group:hover {
+    background-color: #383892;
+}
+#submitbtn{
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: rgb(25, 217, 25);
+    color: white;
+    cursor: pointer;
+}
+#closebtn{
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: rgb(251, 51, 51);
+    color: white;
+    cursor: pointer;
+}
+input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }

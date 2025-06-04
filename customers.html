@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Customers</title>
+  <link rel="stylesheet" href="customers.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="home.html"><button class="home-png-button">HOME</button></a>
+        <a href="settings.php"><button class="setting-png-button">SETTINGS</button></a>
+    </div>
+    <center>
+        <h2 id="groupName" style="text-align: center; margin-top: 20px;"></h2>
+    </center>
+    <div class="body">
+        <!-- Customer List -->
+        <div class="customer-div" id="customerList">
+            <div class="name-div">
+                <p class="name">NAME</p>
+                <p class="amount">AMOUNT</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Customers Button -->
+    <button class="add-new-group" onclick="showAddCustomerModal()">
+        <i class="fa fa-user-plus"></i> Add Customers
+    </button>
+
+    <!-- Modal Box for Add Customer -->
+    <div class="modal-overlay" id="addCustomerModal">
+        <div class="modal-box">
+            <h2>Add Customers</h2>
+            <form onsubmit="submitCustomer(); return false;">
+                <label for="name">Enter Customer Name:</label>
+                <input type="text" id="name" required />
+                <p class="validate-name" style="display:none; color:red;">Should not contain special characters or numbers. Must be 3–50 characters.</p>
+
+                <label for="phone">Phone Number:</label>
+                <input type="number" id="phone" required />
+                <p class="validate-phone" style="display:none; color:red;">Should be 10 digits.</p>
+
+                <label for="bal">Opening Balance:</label>
+                <input type="number" id="bal" required />
+                <p class="validate-balance" style="display:none; color:red;">Shouldn't contain negative values.</p>
+
+                <label for="billno">Bill Number:</label>
+                <input type="text" id="billno" required />
+                <p class="validate-bill" style="display:none; color:red;">Shouldn't contain special characters.</p>
+
+                <div class="modal-buttons">
+                    <button type="submit" id="submitbtn">Submit</button>
+                    <button type="button" id="closebtn" onclick="closeAddCustomerModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const groupid = urlParams.get('groupid');
+            const groupname = urlParams.get('groupname');
+            const userid = 1;  
+            if (!groupid || !groupname) {
+                alert("Missing group ID or group name in URL!");
+            }
+            document.getElementById('groupName').innerText = groupname;
+
+            function showAddCustomerModal() {
+                document.getElementById('addCustomerModal').style.display = 'flex';
+            }
+
+            function closeAddCustomerModal() {
+                document.getElementById('addCustomerModal').style.display = 'none';
+            }
+
+            function loadCustomers() {
+                fetch(`customers.php?groupid=${groupid}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const container = document.getElementById('customerList');
+                        container.innerHTML = `
+                            <div class="name-div">
+                                <p class="name">NAME</p>
+                                <p class="amount">AMOUNT</p>
+                            </div>
+                        `;
+
+                        data.forEach(cust => {
+                            const row = document.createElement('div');
+                            row.className = 'name-div1';
+                            row.innerHTML = `
+                                <p class="name" onclick="showTransactions(${cust.id}, '${cust.name}')">${cust.name}</p>
+                                <p class="amount1">&#8377; ${parseInt(cust.amount).toLocaleString()}</p>
+                            `;
+                            container.appendChild(row);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error loading customers:', error);
+                    });
+            }
+
+            function showTransactions(customerId, customerName) {
+                window.location.href = `transaction.html?customerid=${customerId}&customername=${encodeURIComponent(customerName)}`;
+            }
+
+            function submitCustomer() {
+                const name = document.getElementById('name').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const bal = document.getElementById('bal').value.trim();
+                const billno = document.getElementById('billno').value.trim();
+
+                if (!regName.test(name)) {
+                    document.querySelector('.validate-name').style.display = 'block';
+                    return;
+                }
+                if (!regPhone.test(phone)) {
+                    document.querySelector('.validate-phone').style.display = 'block';
+                    return;
+                }
+                if (!regBal.test(bal)) {
+                    document.querySelector('.validate-balance').style.display = 'block';
+                    return;
+                }
+                if (!regBill.test(billno)) {
+                    document.querySelector('.validate-bill').style.display = 'block';
+                    return;
+                }
+
+                const data = { name, phone, balance: bal, billno, groupid, userid };
+
+                fetch('customers.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(response => {
+                    alert(response.message || response.error);
+                    if (response.message) {
+                        closeAddCustomerModal();
+                        loadCustomers();
+                    }
+                })
+            }
+
+            const regName = /^[A-Za-z ]{3,50}$/;
+            const regPhone = /^[0-9]{10}$/;
+            const regBal = /^\d+$/;
+            const regBill = /^[A-Za-z0-9]{4,15}$/;
+
+            loadCustomers();
+    </script>
+</body>
+</html>

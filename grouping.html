@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Group</title>
+    <link rel="stylesheet" href="grouping.css">
+    <link rel="icon" href="images/srmlogo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="body">
+        <div class="sidebar">
+            <a href="home.html">
+                <button class="home-png-button">HOME</button>
+            </a>
+            <a href="settings.php"><button class="setting-png-button">SETTINGS</button></a>
+        </div>
+
+        <div class="buttons">
+            <div class="gap-div"></div>
+            <div class="groups-container" id="groupsContainer">
+                <!-- Groups will be added dynamically here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed Add Group Button at Bottom Right -->
+    <div class="add-group-wrapper">
+        <button class="add-new-group" onclick="showModal()">
+            <i class="fa fa-user-plus"></i> Add New Group
+        </button>
+    </div>
+
+    <!-- Custom Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <h3>Add Group</h3>
+            <input type="text" id="groupNameInput" placeholder="Enter group name">
+            <div class="modal-buttons">
+                <button onclick="addGroupFromModal()">Add</button>
+                <button onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchGroups();
+        });
+
+        function showModal() {
+            document.getElementById("modalOverlay").style.display = "flex";
+            document.getElementById("groupNameInput").value = "";
+            document.getElementById("groupNameInput").focus();
+        }
+
+        function closeModal() {
+            document.getElementById("modalOverlay").style.display = "none";
+        }
+
+        function addGroupFromModal() {
+            const groupName = document.getElementById("groupNameInput").value.trim();
+            if (groupName !== "") {
+                let formData = new FormData();
+                formData.append('groupName', groupName);
+
+                fetch('addgrp.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        fetchGroups(); // Refresh the group list
+                        closeModal();
+                    } else {
+                        alert("Failed to add group: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("An error occurred while adding the group.");
+                });
+            } else {
+                alert("Group name cannot be empty.");
+            }
+        }
+
+        function fetchGroups() {
+            fetch('addgrp.php')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById("groupsContainer");
+                    container.innerHTML = "";
+
+                    if (data.groups && data.groups.length > 0) {
+                        data.groups.forEach(group => {
+                            const groupBtn = document.createElement("button");
+                            groupBtn.className = "groups-button";
+
+                            const link = document.createElement("a");
+                            link.href = `customers.html?groupid=${group.id}&groupname=${encodeURIComponent(group.name)}`;
+
+                            link.className = "groups";
+                            link.textContent = group.name;
+
+                            groupBtn.appendChild(link);
+                            container.appendChild(groupBtn);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                });
+        }
+    </script>
+</body>
+</html>

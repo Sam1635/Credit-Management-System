@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Transactions</title>
+  <link rel="stylesheet" href="transaction.css">
+  <link rel="icon" href="images/srmlogo.png" type="images/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script> 
+  <style>
+    .print-pdf-button {
+      background-color: #2e2e85;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .print-pdf-button:hover {
+      background-color: #3636a7;
+    }
+    .modal {
+      display: none; /* Hide modals initially */
+    }
+  </style>
+</head>
+
+<body>
+<div class="body">
+  <div class="sidebar">
+    <a href="home.html"><button class="home-png-button">HOME</button></a>
+    <a href="settings.php"><button class="setting-png-button">SETTINGS</button></a>
+  </div>
+
+  <div class="customer-div">
+    <div class="header">
+      <img src="profile.png" class="profile-png">
+      <p><span class="date" id="customerInfo"></span></p>
+      <div class="top_bal">
+        <h2>Balance: ₹<span id="topBalance">0</span></h2>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="title">Date</div>
+      <div class="title_g">Amount Given</div>
+      <div class="title_r">Amount Received</div>
+    </div>
+
+    <div class="data" id="transactionHistory"></div>
+  </div>
+</div>
+
+<div class="bottom" id="bottomButtons">
+  <button class="you-gave-button" onclick="openReduceCreditModal()">Debited ₹</button>
+  <button class="you-got-button" onclick="openAddCreditModal()">Credited ₹</button>
+  <button class="print-pdf-button" onclick="downloadPDF()">Print PDF</button>
+</div>
+
+<!-- Add Credit Modal -->
+<div id="addCreditModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeAddCreditModal()">&times;</span>
+    <h2>Add Credit</h2>
+    <form id="addCreditForm">
+      <div class="form-group">
+        <label for="amountCredited">Amount Credited:</label>
+        <input type="number" id="amountCredited" required>
+      </div>
+      <div class="form-group">
+        <label for="billNo">Bill No:</label>
+        <input type="text" id="billNo" required>
+      </div>
+      <div class="date-box"><label>Date: </label><input type="date" id="addDate"></div>
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+</div>
+
+<!-- Reduce Credit Modal -->
+<div id="reduceCreditModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeReduceCreditModal()">&times;</span>
+    <h2>Reduce Credit</h2>
+    <form id="reduceCreditForm">
+      <div class="form-group">
+        <label for="amountReduced">Amount Reduced:</label>
+        <input type="number" id="amountReduced" required>
+      </div>
+      <div class="date-box"><label>Date: </label><input type="date" id="reduceDate"></div>
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Global flag to check when transactions are loaded
+  let transactionsLoaded = false;
+  
+  const urlParams = new URLSearchParams(window.location.search);
+  const customerid = urlParams.get("customerid");
+  const customername = urlParams.get("customername");
+  
+  document.getElementById("customerInfo").innerText = customername;
+  
+  function loadTransactions() {
+    return fetch(`updateTransaction.php?customerid=${customerid}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          const container = document.getElementById("transactionHistory");
+          container.innerHTML = "";
+  
+          data.transactions.forEach(t => {
+            const div = document.createElement("div");
+            div.className = "entry";
+  
+            const formattedDate = new Date(t.date).toLocaleDateString('en-GB');
+  
+            div.innerHTML = `
+              <div class="title">
+                ${formattedDate}<br>
+                ${t.bill_number ? `<span style="font-size: 12px;">Bill No: ${t.bill_number}</span><br>` : ""}
+                <span class="balance">Balance: ₹${t.current_balance}</span>
+              </div>
+              <div class="title_g">${t.amount_given || 0}</div>
+              <div class="title_r">${t.amount_received || 0}</div>
+            `;
+            container.appendChild(div);
+          });
+  
+          transactionsLoaded = true;
+        }
+      });
+  }
+  
+  function loadLatestBalance() {
+    fetch(`updateTransaction.php?latestbalance=1&customerid=${customerid}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById("topBalance").innerText = data.latest_balance;
+        }
+      });
+  }
+  
+  function openAddCreditModal() {
+    document.getElementById("addCreditModal").style.display = "block";
+  }
+  
+  function closeAddCreditModal() {
+    document.getElementById("addCreditModal").style.display = "none";
+  }
+  
+  function openReduceCreditModal() {
+    document.getElementById("reduceCreditModal").style.display = "block";
+  }
+  
+  function closeReduceCreditModal() {
+    document.getElementById("reduceCreditModal").style.display = "none";
+  }
+  
+  document.getElementById("addCreditForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const amount = parseInt(document.getElementById("amountCredited").value);
+    const billNo = document.getElementById("billNo").value;
+    const date = document.getElementById("addDate").value;
+    addTransaction("credit", amount, billNo, date);
+    closeAddCreditModal();
+  });
+  
+  document.getElementById("reduceCreditForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const amount = parseInt(document.getElementById("amountReduced").value);
+    const date = document.getElementById("reduceDate").value;
+    addTransaction("debit", amount, "", date);
+    closeReduceCreditModal();
+  });
+  
+  function addTransaction(type, amount, billNo, date) {
+    const formData = new FormData();
+    formData.append("customerid", customerid);
+    formData.append("amount", amount);
+    formData.append("bill_no", billNo);
+    formData.append("date", date);
+    formData.append("type", type);
+  
+    fetch("updateTransaction.php", {
+      method: "POST",
+      body: formData,
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        loadTransactions();
+        loadLatestBalance();
+      } else {
+        alert(data.message);
+      }
+    });
+  }
+  
+  // DOWNLOAD PDF FUNCTION (new and correct version)
+  function downloadPDF() {
+  const originalDiv = document.querySelector('.customer-div');
+  const cloneDiv = originalDiv.cloneNode(true);
+
+  // Remove modals from cloned content
+  const modals = cloneDiv.querySelectorAll('.modal');
+  modals.forEach(modal => modal.remove());
+
+  // Fix styling before exporting
+  cloneDiv.style.height = 'auto';
+  cloneDiv.style.minHeight = '0';
+  cloneDiv.style.overflow = 'visible';
+  cloneDiv.style.maxHeight = 'none';
+  cloneDiv.style.padding = '10px';
+  cloneDiv.style.marginTop = '0';
+
+  const tempContainer = document.createElement('div');
+  tempContainer.style.position = 'fixed';
+  tempContainer.style.top = '0';
+  tempContainer.style.left = '0';
+  tempContainer.style.width = '100%';
+  tempContainer.style.zIndex = '-1';
+
+  tempContainer.appendChild(cloneDiv);
+  document.body.appendChild(tempContainer);
+
+  const opt = {
+    margin: 0,
+    filename: 'transaction_history.pdf',
+    image: { type: 'jpeg', quality: 1 },
+    html2canvas: { scale: 3, useCORS: true, scrollY: 0 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['css', 'avoid-all', 'legacy'] }
+  };
+
+  html2pdf().set(opt).from(cloneDiv).save().then(() => {
+    document.body.removeChild(tempContainer);
+  });
+}
+
+  
+  function generatePDF() {
+    const originalDiv = document.querySelector('.customer-div');
+    const cloneDiv = originalDiv.cloneNode(true);
+  
+    // Remove modals from cloned content
+    const modals = cloneDiv.querySelectorAll('.modal');
+    modals.forEach(modal => modal.remove());
+  
+    cloneDiv.style.height = 'auto';
+    cloneDiv.style.overflow = 'visible';
+    cloneDiv.style.maxHeight = 'none';
+  
+    const tempContainer = document.createElement('div');
+    tempContainer.style.position = 'fixed';
+    tempContainer.style.top = '0';
+    tempContainer.style.left = '0';
+    tempContainer.style.width = '100%';
+    tempContainer.style.zIndex = '-1';
+    tempContainer.appendChild(cloneDiv);
+    document.body.appendChild(tempContainer);
+  
+    const opt = {
+      margin:       0.5,
+      filename:     'transaction_history.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, useCORS: true },
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
+      pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+  
+    html2pdf().set(opt).from(cloneDiv).save().then(() => {
+      document.body.removeChild(tempContainer);
+    });
+  }
+  
+  // When page loads
+  window.onload = function() {
+    loadTransactions();
+    loadLatestBalance();
+  };
+  </script>
+  
+</body>
+</html>

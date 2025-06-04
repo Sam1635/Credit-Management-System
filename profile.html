@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="profile.css" />
+  <script src="https://kit.fontawesome.com/6d955499dc.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+  <div class="profile-container">
+    <div class="img">
+      <img src="profileimg.jpg" alt="Profile Image" />
+    </div>
+    <div class="Welcome">
+      <h1 id="welcomeText">Welcome!</h1>
+    </div>
+
+    <div class="info-section">
+      <div class="input-group">
+        <div class="input-wrapper">
+          <input type="text" id="businessName" disabled />
+          <span class="edit-icon" onclick="enableEdit('businessName')"><i class="fa-solid fa-pen"></i></span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="input-wrapper">
+          <input type="email" id="email" disabled />
+          <span class="edit-icon" onclick="enableEdit('email')"><i class="fa-solid fa-pen"></i></span>
+        </div>
+        <div class="change-password-wrapper">
+          <button class="change-password-btn" onclick="openPasswordModal()">Change Password</button>
+        </div>
+      </div>
+
+      <div class="button-group" id="editButtons" style="display: none;">
+        <button id="saveChangesBtn" onclick="saveChanges()">Save</button>
+        <button id="cancelBtn" onclick="cancelChanges()">Cancel</button>
+      </div>
+    </div>
+
+    <div class="stats-box">
+      <div class="stat">
+        <h3>No. of Groups</h3>
+        <p id="groupCount">-</p>
+      </div>
+      <div class="stat">
+        <h3>No. of Customers</h3>
+        <p id="customerCount">-</p>
+      </div>
+      <div class="stat">
+        <h3>Total Balance</h3>
+        <p id="totalBalance">-</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Old Password Modal -->
+  <div id="oldPasswordModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('oldPasswordModal')">&times;</span>
+      <h2>Change Password</h2>
+      <p>Enter your current password to continue</p>
+      <input type="password" id="oldPassword" class="modal-input" placeholder="Current Password">
+      <div class="btns">
+        <button class="modal-btn" onclick="verifyOldPassword()">Continue</button>
+        <button class="modal-btn cancel" onclick="closeModal('oldPasswordModal')">Cancel</button>
+      </div>
+      <p id="oldPasswordError" style="color: red;"></p>
+    </div>
+  </div>
+
+  <!-- New Password Modal -->
+  <div id="newPasswordModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('newPasswordModal')">&times;</span>
+      <h2>Set New Password</h2>
+      <input type="password" id="newPassword" class="modal-input" placeholder="New Password">
+      <input type="password" id="confirmPassword" class="modal-input" placeholder="Confirm New Password">
+      <div class="btns">
+        <button class="modal-btn" onclick="updatePassword()">Save</button>
+        <button class="modal-btn cancel" onclick="closeModal('newPasswordModal')">Cancel</button>
+      </div>
+      <p id="newPasswordError" style="color: red;"></p>
+    </div>
+  </div>
+
+  <script>
+    const originalValues = {};
+
+    function enableEdit(fieldId) {
+      document.getElementById(fieldId).disabled = false;
+      document.getElementById(fieldId).focus();
+      document.getElementById("editButtons").style.display = "flex";
+    }
+
+    // function saveChanges() {
+    //   document.getElementById("businessName").disabled = true;
+    //   document.getElementById("email").disabled = true;
+    //   document.getElementById("editButtons").style.display = "none";
+    //   alert("Changes saved!");
+    //   // Add AJAX here if needed
+    // }
+    function saveChanges() {
+    const businessName = document.getElementById('businessName').value;
+    const email = document.getElementById('email').value;
+
+    fetch('profile.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `business_name=${encodeURIComponent(businessName)}&email=${encodeURIComponent(email)}&update_profile=true`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert('Error: ' + data.error);
+        } else {
+            document.getElementById("businessName").disabled = true;
+            document.getElementById("email").disabled = true;
+            document.getElementById("editButtons").style.display = "none";
+            originalValues.businessName = businessName;
+            originalValues.email = email;
+            document.getElementById('welcomeText').textContent = "Welcome " + businessName + "!!!";
+            alert("Profile updated successfully!");
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while saving');
+    });
+}
+    function cancelChanges() {
+      document.getElementById("businessName").value = originalValues.businessName;
+      document.getElementById("email").value = originalValues.email;
+      document.getElementById("businessName").disabled = true;
+      document.getElementById("email").disabled = true;
+      document.getElementById("editButtons").style.display = "none";
+    }
+
+    // Password change modals
+    function openPasswordModal() {
+      document.getElementById('oldPasswordModal').style.display = 'block';
+      document.getElementById('oldPasswordError').textContent = '';
+      document.getElementById('oldPassword').value = '';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    function verifyOldPassword() {
+    const oldPassword = document.getElementById('oldPassword').value;
+    const errorElement = document.getElementById('oldPasswordError');
+    
+    if (!oldPassword) {
+        errorElement.textContent = 'Please enter your current password';
+        return;
+    }
+    
+    // Show loading state
+    errorElement.textContent = 'Verifying...';
+    
+    // Send to server for verification
+    fetch('profile.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `old_password=${encodeURIComponent(oldPassword)}&verify_only=true`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            errorElement.textContent = data.error;
+        } else {
+            // Password verified, proceed to new password modal
+            document.getElementById('oldPasswordModal').style.display = 'none';
+            document.getElementById('newPasswordModal').style.display = 'block';
+            document.getElementById('newPasswordError').textContent = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        errorElement.textContent = 'An error occurred during verification';
+    });
+}
+    function updatePassword() {
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      if (!newPassword || !confirmPassword) {
+        document.getElementById('newPasswordError').textContent = 'Please fill in both fields';
+        return;
+      }
+      
+      if (newPassword !== confirmPassword) {
+        document.getElementById('newPasswordError').textContent = 'Passwords do not match';
+        return;
+      }
+      
+      if (newPassword.length < 8) {
+        document.getElementById('newPasswordError').textContent = 'Password must be at least 8 characters';
+        return;
+      }
+      
+      // Send to server
+      fetch('profile.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `old_password=${encodeURIComponent(document.getElementById('oldPassword').value)}&new_password=${encodeURIComponent(newPassword)}`
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          document.getElementById('newPasswordError').textContent = data.error;
+          // Reopen old password modal if verification failed
+          if (data.error.includes('old password')) {
+            closeModal('newPasswordModal');
+            openPasswordModal();
+          }
+        } else {
+          alert('Password changed successfully!');
+          closeModal('newPasswordModal');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('newPasswordError').textContent = 'An error occurred';
+      });
+    }
+
+    // Fetch profile data
+    fetch('profile.php')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data); // Debug
+
+        if (data.error) {
+          alert(data.error);
+        } else {
+          document.getElementById('businessName').value = data.business_name;
+          document.getElementById('email').value = data.email;
+          document.getElementById('groupCount').textContent = data.group_count;
+          document.getElementById('customerCount').textContent = data.customer_count;
+          document.getElementById('totalBalance').textContent = "₹" + data.total_balance;
+          document.getElementById('welcomeText').textContent = "Welcome " + data.business_name + "!!!";
+
+          originalValues.businessName = data.business_name;
+          originalValues.email = data.email;
+        }
+      })
+  </script>
+</body>
+</html>

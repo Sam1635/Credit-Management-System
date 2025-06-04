@@ -1,0 +1,10 @@
+.group-container {
+    /* border: 1px solid red; */
+    margin-top: 20%;
+}
+.validate-stmt {
+    color: red;
+    line-height: 0px;
+    margin-top: 7px;
+    display: none;
+}

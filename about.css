@@ -1,0 +1,69 @@
+.Title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header{
+    text-align:right;
+    word-spacing: 30px;
+    padding-right: 30px;
+}
+.header a {
+    text-decoration: none;
+    color: black;
+    
+}
+.anchor:hover{
+    text-decoration: underline;
+}
+.headings{
+    font-family:'Times New Roman', Times, serif;
+    font-size: 30px;
+    font-weight:bold;
+    font-style: oblique;
+    color: rgba(220, 21, 64, 0.891);
+    border-color: black;
+}
+.paragraph{
+    font-family:'Times New Roman', Times, serif;
+    font-size: 22px;
+
+    font: weight 100px;;
+    text-align: justify;
+    font-style:italic;
+    color: black;
+
+}
+.subheadings{
+    font-family:'Times New Roman', Times, serif;
+    font-size: 26px;
+    font-weight:bold;
+    font-style: oblique;
+    color: blueviolet;
+    border-color: black;
+}
+.content{
+    line-height:1.8;
+}
+.bodyclass{
+    background-image: url("background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    opacity: 0.6;
+}
+.background-image{
+    position: fixed;
+    border: 2px solid black;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    opacity: 0.1;
+
+}
+.background-image img {
+    width: 100%;
+    height: 100%;
+}
